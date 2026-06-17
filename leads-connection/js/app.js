@@ -161,7 +161,7 @@
       frame('' +
         '<div class="welcome-card"><h2>Welcome back' + (u.firstName ? ', ' + u.firstName : '') + '!</h2><p>Find new business opportunities and connect with potential clients.</p></div>' +
         '<div class="stats-row">' +
-          '<div class="stat-card"><div class="stat-value" style="color:var(--md-sys-color-primary)">' + u.stats.newLeads + '</div><div class="stat-label">New Leads</div></div>' +
+          '<div class="stat-card"><div class="stat-value" style="color:var(--primary-light)">' + u.stats.newLeads + '</div><div class="stat-label">New Leads</div></div>' +
           '<div class="stat-card"><div class="stat-value" style="color:#1B5E20">' + u.stats.completed + '</div><div class="stat-label">Completed</div></div>' +
           '<div class="stat-card"><div class="stat-value" style="color:#E65100">' + u.stats.inProgress + '</div><div class="stat-label">In Progress</div></div>' +
         '</div>' +
@@ -241,14 +241,14 @@
 
     if (!lead) {
       app.innerHTML = header('Lead Details', { back: true, centered: true }) +
-        '<div class="app-scroll"><div class="page active"><div class="empty-state"><h3>Lead not found</h3><p><a href="#leads" style="color:var(--md-sys-color-primary);cursor:pointer;">Back to leads</a></p></div></div></div>';
+        '<div class="app-scroll"><div class="page active"><div class="empty-state"><h3>Lead not found</h3><p><a href="#leads" style="color:var(--primary-light);cursor:pointer;">Back to leads</a></p></div></div></div>';
       var back = document.getElementById('barBackBtn');
       if (back) back.addEventListener('click', function () { navigate('leads'); });
       return;
     }
 
-    var statusColors = { OPEN: '#1B5E20', ASSIGNED: '#1565C0', IN_PROGRESS: '#E65100', COMPLETED: '#666', CANCELLED: 'var(--md-sys-color-error)' };
-    var priorityColors = { URGENT: 'var(--md-sys-color-error)', HIGH: '#E65100', MEDIUM: '#666', LOW: '#888' };
+    var statusColors = { OPEN: '#1B5E20', ASSIGNED: '#1565C0', IN_PROGRESS: '#E65100', COMPLETED: '#666', CANCELLED: 'var(--error)' };
+    var priorityColors = { URGENT: 'var(--error)', HIGH: '#E65100', MEDIUM: '#666', LOW: '#888' };
     function fmt(n) { return 'R' + n.toLocaleString(); }
     function dateStr(d) {
       if (!d) return '';
@@ -326,9 +326,9 @@
           '<span class="profile-badge">\u2714 ' + u.type + '</span>' +
         '</div>' +
         '<div class="profile-stats">' +
-          '<div class="stat-card"><div class="stat-value" style="color:var(--md-sys-color-primary)">' + u.stats.newLeads + '</div><div class="stat-label">Active</div></div>' +
+          '<div class="stat-card"><div class="stat-value" style="color:var(--primary-light)">' + u.stats.newLeads + '</div><div class="stat-label">Active</div></div>' +
           '<div class="stat-card"><div class="stat-value" style="color:#1B5E20">' + u.completedJobs + '</div><div class="stat-label">Completed</div></div>' +
-          '<div class="stat-card"><div class="stat-value" style="color:var(--md-sys-color-tertiary)">' + u.rating + '</div><div class="stat-label">Rating</div></div>' +
+          '<div class="stat-card"><div class="stat-value" style="color:var(--warning)">' + u.rating + '</div><div class="stat-label">Rating</div></div>' +
         '</div>' +
         '<div class="section-label" style="padding-left:16px;">Settings</div>' +
         '<div class="menu-list">' + menu + '</div>' +
