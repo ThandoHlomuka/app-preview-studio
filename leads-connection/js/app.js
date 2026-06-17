@@ -40,6 +40,8 @@
   var selectedCategory = null;
   var searchQuery = '';
   var currentPage = 'login';
+  var leadViewCount = 0;
+  var adShowing = false;
 
   var app = document.getElementById('app');
 
@@ -163,6 +165,130 @@
     if (data.email !== undefined) currentUser.email = data.email;
     if (data.company !== undefined) currentUser.company = data.company;
     if (data.type !== undefined) currentUser.type = data.type;
+  }
+
+  /* ─── AD SYSTEM ─── */
+
+  var AD_CREATIVES = [
+    {
+      advertiser: 'BuildPro Tools',
+      headline: 'Power Tools Up to 60% Off',
+      body: 'Professional-grade tools for contractors. Free delivery on orders over R500.',
+      cta: 'Shop Now',
+      color: '#f59e0b'
+    },
+    {
+      advertiser: 'Swift Finance',
+      headline: 'Business Loans Approved in 24h',
+      body: 'Get working capital up to R2M with competitive rates. No collateral required for qualified applicants.',
+      cta: 'Apply Now',
+      color: '#06b6d4'
+    },
+    {
+      advertiser: 'LeadGenius CRM',
+      headline: 'Manage Leads on Auto-Pilot',
+      body: 'Track, nurture and convert more leads with LeadGenius. Free 30-day trial for service providers.',
+      cta: 'Start Free Trial',
+      color: '#7c3aed'
+    },
+    {
+      advertiser: 'SafeSite Insurance',
+      headline: 'Contractor Insurance from R99/mo',
+      body: 'Public liability, equipment cover and works insurance. Get covered in 5 minutes.',
+      cta: 'Get Quote',
+      color: '#10b981'
+    },
+    {
+      advertiser: 'TruckIt Logistics',
+      headline: 'Same-Day Delivery Anywhere',
+      body: 'Need equipment or materials moved? TruckIt offers same-day delivery in all major metros.',
+      cta: 'Book Now',
+      color: '#ef4444'
+    }
+  ];
+
+  var lastAdIndex = -1;
+
+  function pickAd() {
+    var idx;
+    do {
+      idx = Math.floor(Math.random() * AD_CREATIVES.length);
+    } while (idx === lastAdIndex && AD_CREATIVES.length > 1);
+    lastAdIndex = idx;
+    return AD_CREATIVES[idx];
+  }
+
+  function showInterstitialAd(onClose) {
+    if (adShowing) return;
+    adShowing = true;
+
+    var ad = pickAd();
+    var overlay = document.createElement('div');
+    overlay.className = 'ad-overlay';
+    overlay.id = 'adOverlay';
+
+    var closeDelay = 4;
+    var canClose = false;
+
+    overlay.innerHTML = '' +
+      '<div class="ad-backdrop"></div>' +
+      '<div class="ad-card">' +
+        '<div class="ad-sponsored">Sponsored \u24D8</div>' +
+        '<div class="ad-icon" style="background:' + ad.color + '">' +
+          '<svg viewBox="0 0 24 24" fill="white"><path d="M21 6h-2v2h-2V6h-2V4h2V2h2v2h2v2zm-10 3c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0 4c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>' +
+        '</div>' +
+        '<div class="ad-advertiser">' + esc(ad.advertiser) + '</div>' +
+        '<div class="ad-headline">' + esc(ad.headline) + '</div>' +
+        '<div class="ad-body">' + esc(ad.body) + '</div>' +
+        '<div class="ad-badge">Ad</div>' +
+        '<button class="btn btn-primary ad-cta" style="background:' + ad.color + ';box-shadow:0 4px 16px rgba(0,0,0,0.2)">' + esc(ad.cta) + '</button>' +
+        '<button class="ad-skip" id="adSkipBtn">Skip ad <span id="adTimer">' + closeDelay + '</span>s</button>' +
+      '</div>';
+
+    document.body.appendChild(overlay);
+
+    overlay.querySelector('.ad-cta').addEventListener('click', function () {
+      showToast('Navigating to ' + ad.advertiser + '...');
+    });
+
+    function dismissAd() {
+      if (!adShowing) return;
+      adShowing = false;
+      if (overlay && overlay.parentNode) {
+        overlay.parentNode.removeChild(overlay);
+      }
+      if (onClose) onClose();
+    }
+
+    var skipBtn = document.getElementById('adSkipBtn');
+    if (skipBtn) {
+      skipBtn.addEventListener('click', function () {
+        if (canClose) dismissAd();
+      });
+    }
+
+    var countdown = closeDelay;
+    var timerEl = document.getElementById('adTimer');
+    var interval = setInterval(function () {
+      countdown--;
+      if (timerEl) timerEl.textContent = countdown;
+      if (countdown <= 0) {
+        clearInterval(interval);
+        canClose = true;
+        if (skipBtn) skipBtn.textContent = 'Skip \u2715';
+      }
+    }, 1000);
+
+    overlay._dismiss = dismissAd;
+    overlay._interval = interval;
+  }
+
+  function getAdViewThreshold() {
+    return 3;
+  }
+
+  function shouldShowAd() {
+    return leadViewCount > 0 && leadViewCount % getAdViewThreshold() === 0;
   }
 
   /* ─── UI HELPERS ─── */
