@@ -224,7 +224,13 @@
     applyDevice();
   });
 
-  // Init
-  setMode('placeholder');
+  // Auto-load from URL query param
+  var params = new URLSearchParams(window.location.search);
+  var autoUrl = params.get('url');
+  if (autoUrl) {
+    loadUrl(autoUrl);
+  } else {
+    setMode('placeholder');
+  }
   applyDevice();
 })();
