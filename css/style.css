@@ -1,0 +1,474 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0f0f1a;
+  --surface: #1a1a2e;
+  --surface2: #252540;
+  --primary: #7c4dff;
+  --primary-hover: #651fff;
+  --accent: #00e5ff;
+  --text: #e0e0e0;
+  --text-muted: #888;
+  --border: #333;
+  --radius: 12px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --device-radius: 48px;
+  --device-bg: #111;
+  --screen-radius: 36px;
+}
+
+html, body {
+  height: 100%;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+/* ─── Toolbar ─── */
+.toolbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+  position: relative;
+  z-index: 10;
+}
+
+.toolbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.toolbar-logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.toolbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.input-group {
+  display: flex;
+  flex: 1;
+  gap: 0;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 0.85rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.input-group input:focus {
+  border-color: var(--primary);
+}
+
+.input-group input::placeholder {
+  color: var(--text-muted);
+}
+
+.btn {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 0 8px 8px 0;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-icon {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-icon:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.device-select {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface2);
+  color: var(--text);
+  font-size: 0.85rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.device-select:focus {
+  border-color: var(--primary);
+}
+
+.upload-btn {
+  cursor: pointer;
+}
+
+/* ─── Studio Area ─── */
+.studio-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 62px);
+  overflow: hidden;
+  padding: 20px;
+}
+
+.device-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+/* ─── Device Frame ─── */
+.device-frame {
+  position: relative;
+  background: var(--device-bg);
+  border-radius: var(--device-radius);
+  padding: 12px;
+  box-shadow:
+    0 0 0 2px #333,
+    0 0 0 4px #222,
+    0 20px 80px rgba(0, 0, 0, 0.6),
+    inset 0 0 20px rgba(255, 255, 255, 0.03);
+  transition: var(--transition);
+  width: 380px;
+}
+
+.device-frame.landscape {
+  width: 700px;
+}
+
+.device-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 28px;
+  background: var(--device-bg);
+  border-radius: 0 0 20px 20px;
+  z-index: 5;
+}
+
+.device-speaker {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 4px;
+  background: #2a2a3a;
+  border-radius: 2px;
+  z-index: 6;
+}
+
+.device-camera {
+  position: absolute;
+  top: 10px;
+  right: calc(50% + 40px);
+  width: 8px;
+  height: 8px;
+  background: #1a1a3a;
+  border-radius: 50%;
+  border: 1px solid #333;
+  z-index: 6;
+}
+
+/* ─── Status Bar ─── */
+.device-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 16px;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 4;
+  min-height: 28px;
+  margin-top: 10px;
+}
+
+.status-icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-time {
+  font-size: 0.82rem;
+}
+
+.status-center {
+  font-size: 0.72rem;
+  opacity: 0.6;
+}
+
+.landscape .device-status-bar {
+  padding: 2px 12px;
+  min-height: 24px;
+}
+
+/* ─── Screen ─── */
+.device-screen {
+  position: relative;
+  background: #000;
+  border-radius: var(--screen-radius);
+  overflow: hidden;
+  aspect-ratio: 9 / 19.5;
+  width: 100%;
+}
+
+.landscape .device-screen {
+  aspect-ratio: 19.5 / 9;
+}
+
+.app-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: none;
+}
+
+.screenshot-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: none;
+  background: #fff;
+}
+
+.screen-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px;
+  text-align: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+}
+
+.placeholder-icon {
+  font-size: 4rem;
+  opacity: 0.3;
+}
+
+.screen-placeholder h2 {
+  font-size: 1.2rem;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.screen-placeholder p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  max-width: 280px;
+}
+
+.placeholder-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.placeholder-actions .btn {
+  font-size: 0.8rem;
+  padding: 6px 16px;
+}
+
+/* ─── Navigation Bar ─── */
+.device-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  padding: 8px 0 4px;
+  position: relative;
+  z-index: 4;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 4px 8px;
+  line-height: 1;
+}
+
+.nav-btn:hover {
+  color: #fff;
+}
+
+.nav-btn:active {
+  transform: scale(0.9);
+}
+
+.nav-home {
+  font-size: 1.3rem;
+}
+
+.landscape .device-nav-bar {
+  gap: 30px;
+  padding: 4px 0 2px;
+}
+
+/* ─── Toast ─── */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--surface2);
+  color: var(--text);
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  border: 1px solid var(--border);
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .toolbar {
+    padding: 10px 12px;
+  }
+
+  .toolbar-inner {
+    gap: 8px;
+  }
+
+  .toolbar-controls {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .toolbar-actions {
+    margin-left: auto;
+  }
+
+  .device-frame {
+    width: 300px;
+    --device-radius: 36px;
+    --screen-radius: 28px;
+    padding: 8px;
+  }
+
+  .device-frame.landscape {
+    width: 480px;
+  }
+
+  .device-notch {
+    width: 100px;
+    height: 22px;
+  }
+
+  .device-camera {
+    right: calc(50% + 30px);
+    width: 6px;
+    height: 6px;
+  }
+
+  .device-speaker {
+    width: 30px;
+    height: 3px;
+  }
+
+  .studio-area {
+    padding: 12px;
+    height: calc(100vh - 110px);
+  }
+}
+
+@media (max-width: 480px) {
+  .device-frame {
+    width: 260px;
+    --device-radius: 28px;
+    --screen-radius: 20px;
+    padding: 6px;
+  }
+
+  .device-frame.landscape {
+    width: 380px;
+  }
+}

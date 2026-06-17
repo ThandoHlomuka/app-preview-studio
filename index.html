@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Preview Studio – Android App Simulator</title>
+  <meta name="description" content="Preview and test Android app designs and web apps in a realistic device simulator.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="toolbar">
+    <div class="toolbar-inner">
+      <h1 class="toolbar-logo">&#9733; App Preview Studio</h1>
+      <div class="toolbar-controls">
+        <div class="input-group">
+          <input type="text" id="urlInput" placeholder="Enter URL to preview (e.g. https://example.com)">
+          <button id="loadUrlBtn" class="btn btn-primary">Load</button>
+        </div>
+        <label class="upload-btn btn btn-outline">
+          Upload Screenshot
+          <input type="file" id="screenshotInput" accept="image/*" hidden>
+        </label>
+      </div>
+      <div class="toolbar-actions">
+        <select id="deviceSelect" class="device-select"></select>
+        <button id="rotateBtn" class="btn btn-icon" title="Rotate Device">&#8630;</button>
+        <button id="screenshotBtn" class="btn btn-icon" title="Capture Screenshot">&#128247;</button>
+        <button id="fullscreenBtn" class="btn btn-icon" title="Fullscreen">&#9974;</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="studio-area">
+    <div class="device-container" id="deviceContainer">
+      <div class="device-frame" id="deviceFrame">
+        <div class="device-notch"></div>
+        <div class="device-speaker"></div>
+        <div class="device-camera"></div>
+        <div class="device-status-bar" id="statusBar">
+          <span class="status-time" id="statusTime">12:00</span>
+          <span class="status-center">Android</span>
+          <span class="status-icons">
+            <span class="status-wifi">&#9862;</span>
+            <span class="status-signal">&#9640;</span>
+            <span class="status-battery" id="statusBattery">&#x26A1;</span>
+          </span>
+        </div>
+        <div class="device-screen" id="deviceScreen">
+          <div class="screen-placeholder" id="screenPlaceholder">
+            <div class="placeholder-icon">&#128241;</div>
+            <h2>App Preview Studio</h2>
+            <p>Load a URL or upload a screenshot to preview your Android app</p>
+            <div class="placeholder-actions">
+              <button id="placeholderUrlBtn" class="btn btn-primary">Enter a URL</button>
+              <button id="placeholderUploadBtn" class="btn btn-outline">Upload Screenshot</button>
+            </div>
+          </div>
+          <iframe id="appFrame" class="app-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+          <img id="screenshotPreview" class="screenshot-preview" alt="App Screenshot Preview">
+        </div>
+        <div class="device-nav-bar">
+          <button class="nav-btn" id="navBack" title="Back">&#9664;</button>
+          <button class="nav-btn nav-home" id="navHome" title="Home">&#9675;</button>
+          <button class="nav-btn" id="navRecent" title="Recent">&#9634;</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
