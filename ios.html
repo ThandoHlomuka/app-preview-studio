@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App Preview Studio – Android App Simulator</title>
-  <meta name="description" content="Preview and test Android app designs and web apps in a realistic device simulator.">
+  <title>App Preview Studio – iOS App Simulator</title>
+  <meta name="description" content="Preview and test iOS app designs and web apps in a realistic iPhone simulator.">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/ios.css">
 </head>
 <body>
 
   <header class="toolbar">
     <div class="toolbar-inner">
-      <h1 class="toolbar-logo"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg> App Preview Studio <span>v1.0</span></h1>
+      <h1 class="toolbar-logo"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg> App Preview Studio <span>v1.0</span></h1>
       <div class="toolbar-controls">
         <div class="input-group">
           <input type="text" id="urlInput" placeholder="Enter URL to preview (e.g. https://example.com)">
@@ -24,8 +25,8 @@
       </div>
       <div class="toolbar-actions">
         <div class="platform-toggle">
-          <button class="platform-btn active">Android</button>
-          <button class="platform-btn" onclick="window.location.href='ios.html'">iOS</button>
+          <button class="platform-btn" onclick="window.location.href='index.html'">Android</a>
+          <button class="platform-btn active">iOS</a>
         </div>
         <select id="deviceSelect" class="device-select"></select>
         <button id="rotateBtn" class="btn btn-icon" title="Rotate Device"><svg viewBox="0 0 24 24"><path d="M15.55 5.55L11 1v3.07C7.06 4.56 4 7.92 4 12s3.06 7.44 7 7.93v-2.02c-2.84-.48-5-2.94-5-5.91s2.16-5.43 5-5.91V1l4.55 4.55zM19.93 11c-.17-1.39-.72-2.73-1.62-3.89l-1.42 1.42c.54.75.88 1.6 1.02 2.47h2.02zM13 17.93v2.02c1.39-.17 2.73-.72 3.89-1.62l-1.42-1.42c-.75.54-1.59.89-2.47 1.02zm3.89-2.42l1.42 1.41c.9-1.16 1.45-2.5 1.62-3.89h-2.02c-.14.87-.48 1.72-1.02 2.48z"/></svg></button>
@@ -37,24 +38,50 @@
 
   <main class="studio-area">
     <div class="device-container" id="deviceContainer">
-      <div class="device-frame" id="deviceFrame">
-        <div class="device-notch"></div>
-        <div class="device-speaker"></div>
-        <div class="device-camera"></div>
-        <div class="device-status-bar" id="statusBar">
+      <div class="ios-frame" id="deviceFrame">
+
+        <!-- Side buttons (visual only) -->
+        <div class="ios-side-buttons">
+          <div class="ios-side-btn mute"></div>
+          <div class="ios-side-btn vol-up"></div>
+          <div class="ios-side-btn vol-down"></div>
+        </div>
+        <div class="ios-side-btn-right"></div>
+
+        <!-- Dynamic Island -->
+        <div class="ios-dynamic-island"></div>
+
+        <!-- Notch (fallback for older models) -->
+        <div class="ios-notch">
+          <div class="ios-notch-speaker"></div>
+          <div class="ios-notch-camera"></div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="ios-status-bar" id="statusBar">
           <span class="status-time" id="statusTime">12:00</span>
-          <span class="status-center">Android</span>
-          <span class="status-icons">
-            <span class="status-wifi"><svg viewBox="0 0 24 24"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg></span>
-            <span class="status-signal"><svg viewBox="0 0 24 24"><path d="M2 22h20V2z"/></svg></span>
-            <span class="status-battery" id="statusBattery"><svg viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg></span>
+          <span class="status-center">iOS</span>
+          <span class="status-icons ios-status-icons">
+            <span class="ios-signal-bars">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+            </span>
+            <span><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg></span>
+            <span class="ios-battery">
+              <span class="ios-battery-icon"><span class="fill"></span></span>
+              <span class="ios-battery-pct">78%</span>
+            </span>
           </span>
         </div>
-        <div class="device-screen" id="deviceScreen">
+
+        <!-- Screen -->
+        <div class="ios-screen" id="deviceScreen">
           <div class="screen-placeholder" id="screenPlaceholder">
-            <div class="placeholder-icon"><svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg></div>
-            <h2>App Preview Studio</h2>
-            <p>Load a URL or upload a screenshot to preview your Android app</p>
+            <div class="placeholder-icon ios-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-5-5 1.41-1.41L11 14.17l7.59-7.59L20 8l-9 9z"/></svg></div>
+            <h2>iOS Simulator</h2>
+            <p>Load a URL or upload a screenshot to preview your iOS app</p>
             <div class="placeholder-actions">
               <button id="placeholderUrlBtn" class="btn btn-primary">Enter a URL</button>
               <button id="placeholderUploadBtn" class="btn btn-outline">Upload Screenshot</button>
@@ -63,17 +90,16 @@
           <iframe id="appFrame" class="app-frame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
           <img id="screenshotPreview" class="screenshot-preview" alt="App Screenshot Preview">
         </div>
-        <div class="device-nav-bar">
-          <button class="nav-btn" id="navBack" title="Back"><svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></button>
-          <button class="nav-btn nav-home" id="navHome" title="Home"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></button>
-          <button class="nav-btn" id="navRecent" title="Recent"><svg viewBox="0 0 24 24"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg></button>
-        </div>
+
+        <!-- Home Indicator -->
+        <div class="ios-home-indicator"></div>
+
       </div>
     </div>
   </main>
 
   <div class="toast" id="toast"></div>
 
-  <script src="js/app.js"></script>
+  <script src="js/ios.js"></script>
 </body>
 </html>
